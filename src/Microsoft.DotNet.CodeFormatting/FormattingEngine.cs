@@ -4,12 +4,13 @@
 
 using System;
 using System.Linq;
-using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition;
+using System.Composition.Hosting;
+using System.Composition;
 using System.Collections.Generic;
 using Microsoft.DotNet.CodeFormatting.Rules;
 using Microsoft.DotNet.CodeFormatting.Filters;
 using System.Collections.Immutable;
+using System.Composition.Hosting.Core;
 
 namespace Microsoft.DotNet.CodeFormatting
 {
@@ -18,7 +19,7 @@ namespace Microsoft.DotNet.CodeFormatting
         public static IFormattingEngine Create()
         {
             var container = CreateCompositionContainer();
-            var engine = container.GetExportedValue<IFormattingEngine>();
+            var engine = container.GetExport<IFormattingEngine>();
             var consoleFormatLogger = new ConsoleFormatLogger();
             return engine;
         }
@@ -33,19 +34,22 @@ namespace Microsoft.DotNet.CodeFormatting
             return list;
         }
 
-        private static void AppendRules<T>(List<IRuleMetadata> list, CompositionContainer container)
+        private static void AppendRules<T>(List<IRuleMetadata> list, CompositionHost container)
             where T : IFormattingRule
         {
-            foreach (var rule in container.GetExports<T, IRuleMetadata>())
+            foreach (var rule in container.GetExports<Lazy<T, IRuleMetadata>>())
             {
                 list.Add(rule.Metadata);
             }
         }
 
-        private static CompositionContainer CreateCompositionContainer()
+        private static CompositionHost CreateCompositionContainer()
         {
-            var catalog = new AssemblyCatalog(typeof(FormattingEngine).Assembly);
-            return new CompositionContainer(catalog);
+            var configuration = new ContainerConfiguration()
+                .WithAssembly(typeof(FormattingEngine).Assembly);
+            var container = configuration.CreateContainer();
+
+            return container;
         }
     }
 }

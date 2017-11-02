@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +23,15 @@ namespace Microsoft.DotNet.CodeFormatting
             Description = description;
             Order = order;
             DefaultRule = true;
+        }
+
+        public SyntaxRuleAttribute(IDictionary<string, object> @params)
+            : base(typeof(ISyntaxFormattingRule))
+        {
+            Name = (string) @params[nameof(Name)];
+            Description = (string) @params[nameof(Description)];
+            Order = (int) @params[nameof(Order)];
+            DefaultRule = (bool) @params[nameof(DefaultRule)];
         }
 
         [DefaultValue("")]
@@ -51,6 +60,15 @@ namespace Microsoft.DotNet.CodeFormatting
             DefaultRule = true;
         }
 
+        public LocalSemanticRuleAttribute(IDictionary<string, object> @params)
+            : base(typeof(ILocalSemanticFormattingRule))
+        {
+            Name = (string)@params[nameof(Name)];
+            Description = (string)@params[nameof(Description)];
+            Order = (int)@params[nameof(Order)];
+            DefaultRule = (bool)@params[nameof(DefaultRule)];
+        }
+
         [DefaultValue("")]
         public string Name { get; private set; }
 
@@ -75,6 +93,15 @@ namespace Microsoft.DotNet.CodeFormatting
             Description = description;
             Order = order;
             DefaultRule = true;
+        }
+
+        public GlobalSemanticRuleAttribute(IDictionary<string, object> @params) 
+            : base(typeof(IGlobalSemanticFormattingRule))
+        {
+            Name = (string)@params[nameof(Name)];
+            Description = (string)@params[nameof(Description)];
+            Order = (int)@params[nameof(Order)];
+            DefaultRule = (bool)@params[nameof(DefaultRule)];
         }
 
         [DefaultValue("")]

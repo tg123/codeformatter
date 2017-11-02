@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +13,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Composition;
 using Microsoft.CodeAnalysis.VisualBasic;
 
 namespace Microsoft.DotNet.CodeFormatting.Rules
@@ -26,7 +26,7 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
         private readonly Options _options;
 
         [ImportingConstructor]
-        internal FormatDocumentFormattingRule(Options options)
+        public FormatDocumentFormattingRule([Import] Options options)
         {
             _options = options;
         }

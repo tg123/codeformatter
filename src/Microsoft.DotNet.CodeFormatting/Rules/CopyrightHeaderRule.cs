@@ -4,11 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
+using System.Composition;
 using Microsoft.CodeAnalysis;
 
 namespace Microsoft.DotNet.CodeFormatting.Rules
@@ -170,7 +170,7 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
         private ImmutableArray<string> _cachedHeaderSource;
 
         [ImportingConstructor]
-        internal CopyrightHeaderRule(Options options)
+        public CopyrightHeaderRule([Import] Options options)
         {
             _options = options;
         }

@@ -16,7 +16,8 @@ namespace Microsoft.DotNet.CodeFormatting
         private static Encoding s_utf8WithoutBom = new UTF8Encoding(false);
 
         private ResponseFileWorkspace()
-            : base(DesktopMefHostServices.DefaultServices, "Custom")
+//            : base(DesktopMefHostServices.DefaultServices, "Custom")
+            : base(MefHostServices.DefaultHost, "Custom")
         {
         }
 
@@ -25,23 +26,23 @@ namespace Microsoft.DotNet.CodeFormatting
             return new ResponseFileWorkspace();
         }
 
-        public Project OpenCommandLineProject(string responseFile, string language)
-        {
-            // This line deserves better error handling, but the tools current model is just throwing exception for most errors.
-            // Issue: #90
-            string rspContents = File.ReadAllText(responseFile);
-
-            var projectInfo = CommandLineProject.CreateProjectInfo(
-                projectName: Path.GetFileNameWithoutExtension(responseFile),
-                language: language,
-                commandLine: rspContents,
-                baseDirectory: Path.GetDirectoryName(Path.GetFullPath(responseFile)),
-                workspace: this);
-
-            this.OnProjectAdded(projectInfo);
-
-            return this.CurrentSolution.GetProject(projectInfo.Id);
-        }
+//        public Project OpenCommandLineProject(string responseFile, string language)
+//        {
+//            // This line deserves better error handling, but the tools current model is just throwing exception for most errors.
+//            // Issue: #90
+//            string rspContents = File.ReadAllText(responseFile);
+//
+//            var projectInfo = CommandLineProject.CreateProjectInfo(
+//                projectName: Path.GetFileNameWithoutExtension(responseFile),
+//                language: language,
+//                commandLine: rspContents,
+//                baseDirectory: Path.GetDirectoryName(Path.GetFullPath(responseFile)),
+//                workspace: this);
+//
+//            this.OnProjectAdded(projectInfo);
+//
+//            return this.CurrentSolution.GetProject(projectInfo.Id);
+//        }
 
         public override bool CanApplyChange(ApplyChangesKind feature)
         {

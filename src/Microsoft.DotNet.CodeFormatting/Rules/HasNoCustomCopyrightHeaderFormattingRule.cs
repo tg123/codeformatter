@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -29,7 +29,7 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
         private readonly Options _options;
 
         [ImportingConstructor]
-        internal HasNoCustomCopyrightHeaderFormattingRule(Options options)
+        public HasNoCustomCopyrightHeaderFormattingRule([Import] Options options)
         {
             _options = options;
         }

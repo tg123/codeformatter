@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace Microsoft.DotNet.CodeFormatting.Filters
         private readonly Options _options;
 
         [ImportingConstructor]
-        public FilenameFilter(Options options)
+        public FilenameFilter([Import] Options options)
         {
             _options = options;
         }

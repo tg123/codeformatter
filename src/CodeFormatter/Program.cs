@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.DotNet.CodeFormatting;
 
 namespace CodeFormatter
@@ -119,27 +118,27 @@ namespace CodeFormatter
             {
                 using (var workspace = ResponseFileWorkspace.Create())
                 {
-                    Project project = workspace.OpenCommandLineProject(item, language);
-                    await engine.FormatProjectAsync(project, cancellationToken);
+//                    Project project = workspace.OpenCommandLineProject(item, language);
+//                    await engine.FormatProjectAsync(project, cancellationToken);
                 }
             }
             else if (StringComparer.OrdinalIgnoreCase.Equals(extension, ".sln"))
             {
-                using (var workspace = MSBuildWorkspace.Create())
-                {
-                    workspace.LoadMetadataForReferencedProjects = true;
-                    var solution = await workspace.OpenSolutionAsync(item, cancellationToken);
-                    await engine.FormatSolutionAsync(solution, cancellationToken);
-                }
+//                using (var workspace = MSBuildWorkspace.Create())
+//                {
+//                    workspace.LoadMetadataForReferencedProjects = true;
+//                    var solution = await workspace.OpenSolutionAsync(item, cancellationToken);
+//                    await engine.FormatSolutionAsync(solution, cancellationToken);
+//                }
             }
             else
             {
-                using (var workspace = MSBuildWorkspace.Create())
-                {
-                    workspace.LoadMetadataForReferencedProjects = true;
-                    var project = await workspace.OpenProjectAsync(item, cancellationToken);
-                    await engine.FormatProjectAsync(project, cancellationToken);
-                }
+//                using (var workspace = MSBuildWorkspace.Create())
+//                {
+//                    workspace.LoadMetadataForReferencedProjects = true;
+//                    var project = await workspace.OpenProjectAsync(item, cancellationToken);
+//                    await engine.FormatProjectAsync(project, cancellationToken);
+//                }
             }
         }
 
